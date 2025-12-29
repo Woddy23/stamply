@@ -15,8 +15,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-// Initialize Stripe - Replace with your actual publishable key
-const stripePromise = loadStripe('pk_test_YOUR_PUBLISHABLE_KEY_HERE');
+// Initialize Stripe - Uses environment variable
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 
 // Plan interface
 interface Plan {
