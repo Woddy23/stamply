@@ -2,6 +2,35 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "installCommand": "npm install",
-  "framework": null
+  "framework": null,
+  "headers": [
+    {
+      "source": "/select-plan",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex,nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/checkout/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex,nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/auth",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex,nofollow"
+        }
+      ]
+    }
+  ]
 }
 

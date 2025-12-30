@@ -2,10 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Check, Rocket, TrendingUp, Crown, Sparkles, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
+import { SEO } from '../components/SEO';
 
 export function SelectPlan() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
 
   const plans = [
@@ -81,7 +82,13 @@ export function SelectPlan() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 pt-12 pb-20">
+    <>
+      <SEO 
+        title={language === 'pt' ? 'Selecione o Plano - Stamply' : 'Select Plan - Stamply'}
+        description={language === 'pt' ? 'Escolha o plano perfeito para o seu negócio' : 'Choose the perfect plan for your business'}
+        noindex={true}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 pt-12 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <button
@@ -211,5 +218,6 @@ export function SelectPlan() {
         </div>
       </div>
     </div>
+    </>
   );
 }

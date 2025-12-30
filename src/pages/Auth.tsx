@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Mail, Lock, User, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { SEO } from '../components/SEO';
 
 export function Auth() {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,13 @@ export function Auth() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 pt-32 pb-20">
+    <>
+      <SEO 
+        title={language === 'pt' ? 'Iniciar Sessão - Stamply' : 'Login - Stamply'}
+        description={language === 'pt' ? 'Aceda à sua conta Stamply' : 'Access your Stamply account'}
+        noindex={true}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 pt-32 pb-20">
       <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-gray-100">
           {/* Header */}
@@ -264,5 +271,6 @@ export function Auth() {
         )}
       </AnimatePresence>
     </div>
+    </>
   );
 }

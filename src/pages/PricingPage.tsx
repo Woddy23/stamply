@@ -3,11 +3,14 @@ import { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { SEO } from '../components/SEO';
+import { useSEO } from '../hooks/useSEO';
 
 export function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const { t } = useLanguage();
+  const seo = useSEO();
   const navigate = useNavigate();
 
   const plans = [
@@ -105,7 +108,9 @@ export function PricingPage() {
   ];
 
   return (
-    <main className="pt-16">
+    <>
+      <SEO title={seo.title} description={seo.description} />
+      <main className="pt-16">
       {/* Hero Section */}
       <section className="relative py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-orange-50 to-white overflow-hidden">
         {/* Animated Background Elements */}
@@ -366,6 +371,7 @@ export function PricingPage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

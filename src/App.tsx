@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { LanguageProvider } from './contexts/LanguageContext';
+import { HelmetProvider } from 'react-helmet-async';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -22,6 +23,16 @@ function ScrollToTop() {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  return null;
+}
+
+function LanguageUpdater() {
+  const { language } = useLanguage();
+  
+  useEffect(() => {
+    document.documentElement.lang = language === 'pt' ? 'pt-PT' : 'en-US';
+  }, [language]);
+  
   return null;
 }
 
@@ -52,13 +63,16 @@ function Layout() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="min-h-screen bg-white">
-          <Layout />
-        </div>
-      </Router>
-    </LanguageProvider>
+    <HelmetProvider>
+      <LanguageProvider>
+        <Router>
+          <LanguageUpdater />
+          <ScrollToTop />
+          <div className="min-h-screen bg-white">
+            <Layout />
+          </div>
+        </Router>
+      </LanguageProvider>
+    </HelmetProvider>
   );
 }

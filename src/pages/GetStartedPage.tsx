@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { CheckCircle, ArrowRight, Zap, Users, Shield } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { SEO } from '../components/SEO';
+import { useSEO } from '../hooks/useSEO';
 
 export function GetStartedPage() {
   const { t } = useLanguage();
+  const seo = useSEO();
   
   const [formData, setFormData] = useState({
     fullName: '',
@@ -63,7 +66,9 @@ export function GetStartedPage() {
   ];
 
   return (
-    <main className="pt-16">
+    <>
+      <SEO title={seo.title} description={seo.description} />
+      <main className="pt-16">
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-50 to-white">
         <div className="max-w-7xl mx-auto text-center">
@@ -364,6 +369,7 @@ export function GetStartedPage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

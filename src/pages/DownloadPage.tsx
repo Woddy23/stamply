@@ -3,9 +3,12 @@ import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { SEO } from '../components/SEO';
+import { useSEO } from '../hooks/useSEO';
 
 export function DownloadPage() {
   const { t, language } = useLanguage();
+  const seo = useSEO();
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   
   const platforms = [
@@ -91,7 +94,9 @@ export function DownloadPage() {
   ];
 
   return (
-    <main className="pt-16">
+    <>
+      <SEO title={seo.title} description={seo.description} />
+      <main className="pt-16">
       {/* Hero Section */}
       <section className="relative py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-orange-50 to-white overflow-hidden">
         {/* Animated Background Elements */}
@@ -421,6 +426,7 @@ export function DownloadPage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

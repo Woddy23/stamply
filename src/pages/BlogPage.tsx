@@ -3,9 +3,12 @@ import { Calendar, ArrowRight, User, Clock, Search, TrendingUp, Sparkles, BookOp
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { motion } from 'motion/react';
+import { SEO } from '../components/SEO';
+import { useSEO } from '../hooks/useSEO';
 
 export function BlogPage() {
   const { t, language } = useLanguage();
+  const seo = useSEO();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(language === 'pt' ? 'Todos' : 'All');
 
@@ -152,7 +155,9 @@ export function BlogPage() {
   const featuredPost = blogPosts[0];
 
   return (
-    <main className="pt-16">
+    <>
+      <SEO title={seo.title} description={seo.description} />
+      <main className="pt-16">
       {/* Hero Section */}
       <section className="relative py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-orange-50 to-white overflow-hidden">
         {/* Animated Background Elements */}
@@ -187,7 +192,7 @@ export function BlogPage() {
               transition={{ delay: 0.3, duration: 0.6 }}
             >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl text-gray-900 mb-4 leading-[1.1] tracking-tight">
-                {language === 'pt' ? 'Recursos Stamply' : 'Stamply Resources'}
+                {language === 'pt' ? 'Blog Stamply: Fidelização, Selos e Pontos' : 'Stamply Blog: Loyalty, Stamps & Points'}
               </h1>
             </motion.div>
 
@@ -361,6 +366,7 @@ export function BlogPage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

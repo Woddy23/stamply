@@ -2,9 +2,12 @@ import { Users, FileCheck, Palette, Sparkles, Shield, Layout, Database, Workflow
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useState } from 'react';
+import { SEO } from '../components/SEO';
+import { useSEO } from '../hooks/useSEO';
 
 export function FeaturesPage() {
   const { t } = useLanguage();
+  const seo = useSEO();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const advancedFeatures = [
@@ -41,7 +44,9 @@ export function FeaturesPage() {
   ];
 
   return (
-    <main className="pt-16">
+    <>
+      <SEO title={seo.title} description={seo.description} />
+      <main className="pt-16">
       {/* Hero Section with Animated Background */}
       <section className="relative py-40 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-orange-50 overflow-hidden">
         {/* Animated Background Elements */}
@@ -221,6 +226,7 @@ export function FeaturesPage() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

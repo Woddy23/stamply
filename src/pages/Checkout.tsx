@@ -14,6 +14,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { SEO } from '../components/SEO';
 
 // Initialize Stripe - Uses environment variable
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
@@ -247,7 +248,7 @@ export function Checkout() {
   const { planId } = useParams<{ planId: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const [isBusiness, setIsBusiness] = useState(false);
 
@@ -289,8 +290,14 @@ export function Checkout() {
   const totalPrice = pricePerMonth + vat;
 
   return (
-    <Elements stripe={stripePromise}>
-      <div className="min-h-screen bg-gradient-to-b from-white via-orange-50 to-white">
+    <>
+      <SEO 
+        title={language === 'pt' ? 'Finalizar Assinatura - Stamply' : 'Finalize Subscription - Stamply'}
+        description={language === 'pt' ? 'Complete o seu registo no Stamply' : 'Complete your Stamply registration'}
+        noindex={true}
+      />
+      <Elements stripe={stripePromise}>
+        <div className="min-h-screen bg-gradient-to-b from-white via-orange-50 to-white">
         {/* Background decoration */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 -left-20 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
@@ -559,5 +566,6 @@ export function Checkout() {
         </div>
       </div>
     </Elements>
+    </>
   );
 }

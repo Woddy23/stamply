@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /select-plan
+Disallow: /checkout
+Disallow: /auth
+
+Sitemap: https://getstamply.vercel.app/sitemap.xml
+
