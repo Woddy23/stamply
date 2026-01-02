@@ -13,8 +13,8 @@ export function SelectPlan() {
     {
       id: 'starter',
       name: t('selectPlan.starter'),
-      monthlyPrice: 7.99,
-      annualPrice: 6.87, // 14% discount
+      monthlyPrice: 6.8,
+      annualPrice: 81.6,
       icon: Rocket,
       iconColor: 'from-orange-400 to-orange-500',
       features: [
@@ -28,8 +28,8 @@ export function SelectPlan() {
     {
       id: 'growth',
       name: t('selectPlan.growth'),
-      monthlyPrice: 15.99,
-      annualPrice: 13.75, // 14% discount
+      monthlyPrice: 13.6,
+      annualPrice: 163.2,
       icon: TrendingUp,
       iconColor: 'from-orange-500 to-orange-600',
       popular: true,
@@ -44,8 +44,8 @@ export function SelectPlan() {
     {
       id: 'pro',
       name: t('selectPlan.pro'),
-      monthlyPrice: 24.99,
-      annualPrice: 21.49, // 14% discount
+      monthlyPrice: 21.2,
+      annualPrice: 254.4,
       icon: Crown,
       iconColor: 'from-orange-600 to-orange-700',
       features: [
@@ -79,6 +79,25 @@ export function SelectPlan() {
     }
     const price = billingCycle === 'monthly' ? plan.monthlyPrice : plan.annualPrice;
     return `€${price?.toFixed(2)}`;
+  };
+
+  const getStripeLink = (planId: string, cycle: 'monthly' | 'annual'): string | null => {
+    if (planId === 'starter') {
+      return cycle === 'monthly' 
+        ? 'https://buy.stripe.com/14A8wQ0yIg9mc1G4Fr5kk03'
+        : 'https://buy.stripe.com/aFa28s1CMcXa8PudbX5kk04';
+    }
+    if (planId === 'growth') {
+      return cycle === 'monthly'
+        ? 'https://buy.stripe.com/00w5kEdlue1e8Pu0pb5kk05'
+        : 'https://buy.stripe.com/fZubJ24OYaP21n29ZL5kk06';
+    }
+    if (planId === 'pro') {
+      return cycle === 'monthly'
+        ? 'https://buy.stripe.com/eVqcN60yIe1ee9Ogo95kk07'
+        : 'https://buy.stripe.com/8x2bJ2gxG4qE1n24Fr5kk08';
+    }
+    return null;
   };
 
   return (
@@ -189,22 +208,37 @@ export function SelectPlan() {
                 </ul>
 
                 {/* CTA Button */}
-                <button
-                  onClick={() => {
-                    if (plan.id === 'enterprise') {
-                      navigate('/contact');
-                    } else {
-                      navigate(`/checkout/${plan.id}?cycle=${billingCycle}`);
-                    }
-                  }}
-                  className={`w-full py-3 rounded-xl transition-all duration-300 ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:scale-105'
-                      : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-                  }`}
-                >
-                  {plan.id === 'enterprise' ? t('selectPlan.contact') : t('selectPlan.selectPlan')}
-                </button>
+                {getStripeLink(plan.id, billingCycle) ? (
+                  <a
+                    href={getStripeLink(plan.id, billingCycle)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-full py-3 rounded-xl transition-all duration-300 block text-center ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:scale-105'
+                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                    }`}
+                  >
+                    {t('selectPlan.selectPlan')}
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => {
+                      if (plan.id === 'enterprise') {
+                        navigate('/contact');
+                      } else {
+                        navigate(`/checkout/${plan.id}?cycle=${billingCycle}`);
+                      }
+                    }}
+                    className={`w-full py-3 rounded-xl transition-all duration-300 ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:shadow-lg hover:scale-105'
+                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+                    }`}
+                  >
+                    {plan.id === 'enterprise' ? t('selectPlan.contact') : t('selectPlan.selectPlan')}
+                  </button>
+                )}
               </div>
             </div>
           ))}
